@@ -2,25 +2,31 @@ package main
 
 import (
 	"fmt"
-	"github.com/fgehrlicher/reminder-bot/config"
+	"github.com/fgehrlicher/reminder-bot/conf"
+	"github.com/fgehrlicher/reminder-bot/db"
 	"log"
 	"os"
 
 	"github.com/urfave/cli"
 )
 
-const configFilePath = "./config.yml"
+const configFilePath = "./conf.yml"
 
 func main() {
 	app := cli.NewApp()
 	app.Name = "Reminder Bot"
 	app.Action = func(c *cli.Context) error {
-		conf, err := config.LoadConfig(configFilePath)
+		config, err := conf.LoadConfig(configFilePath)
 		if err != nil {
 			return err
 		}
 
-		fmt.Println(conf.Database.Path)
+		database, err := db.GetConnection(config)
+		if err != nil {
+			return err
+		}
+
+		fmt.Println(config.Database.Path)
 		return nil
 	}
 

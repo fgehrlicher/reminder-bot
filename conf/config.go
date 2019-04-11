@@ -1,4 +1,4 @@
-package config
+package conf
 
 import (
 	"io/ioutil"
@@ -7,7 +7,7 @@ import (
 )
 
 type Config struct {
-	Database struct{
+	Database struct {
 		Path string
 	}
 }
